@@ -23,3 +23,41 @@ const gameBoard = (function () {
 
 gameBoard.printBoard();
 
+const gameController = (
+  playerOneName = "Player One",
+  playerTwoName = "Player Two"
+) => {
+  const board = gameBoard;
+
+  const players = [
+    { name: playerOneName, mark: "X" },
+    { name: playerTwoName, mark: "O" },
+  ];
+
+  let activePlayer = players[0];
+
+  const getActivePlayer = () => activePlayer;
+
+  const switchPlayerTurn = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  };
+
+  const printNewRound = () => {
+    board.printBoard();
+    console.log(`${getActivePlayer().name}'s turn`);
+  };
+
+  const playRound = (row, column) => {
+    console.log(`${getActivePlayer().name} is playing...`);
+    board.drawXorO(row, column, getActivePlayer().mark);
+
+    switchPlayerTurn();
+    printNewRound();
+  };
+
+  printNewRound();
+
+  return { playRound, getActivePlayer };
+};
+
+const game = gameController();
