@@ -35,8 +35,15 @@ const gameController = (
   ];
 
   let activePlayer = players[0];
+  let winner = null;
 
   const getActivePlayer = () => activePlayer;
+
+  const setWinner = () => {
+    winner = isWinnerDeclared() ? getActivePlayer().name : null;
+  };
+
+  const getWinner = () => winner;
 
   const switchPlayerTurn = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -44,88 +51,99 @@ const gameController = (
 
   const printNewRound = () => {
     board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn`);
+    if (winner) {
+      console.log(`${getWinner()} is the winner!`);
+    } else {
+      console.log(`${getActivePlayer().name}'s turn`);
+    }
   };
 
   const playRound = (row, column) => {
     console.log(`${getActivePlayer().name} is playing...`);
     board.drawXorO(row, column, getActivePlayer().mark);
 
-    const declareWinner = () => {
-      let hasWon = false;
-      // // Win conditions
-      // Right diagonal
-      if (
-        board.getBoard()[0][2] === board.getBoard()[1][1] &&
-        board.getBoard()[1][1] === board.getBoard()[2][0]
-      ) {
-        hasWon = true;
-      }
-
-      // Left diagonal
-      if (
-        board.getBoard()[0][0] === board.getBoard()[1][1] &&
-        board.getBoard()[1][1] === board.getBoard()[2][0]
-      ) {
-        hasWon = true;
-      }
-
-      // First horizontal
-      if (
-        board.getBoard()[0][0] === board.getBoard()[0][1] &&
-        board.getBoard()[0][1] === board.getBoard()[0][2]
-      ) {
-        hasWon = true;
-      }
-
-      // Second horizontal
-      if (
-        board.getBoard()[1][0] === board.getBoard()[1][1] &&
-        board.getBoard()[1][1] === board.getBoard()[1][2]
-      ) {
-        hasWon = true;
-      }
-
-      // Third horizontal
-      if (
-        board.getBoard()[2][0] === board.getBoard()[2][1] &&
-        board.getBoard()[2][1] === board.getBoard()[2][2]
-      ) {
-        hasWon = true;
-      }
-
-      // First vertical
-      if (
-        board.getBoard()[0][0] === board.getBoard()[1][0] &&
-        board.getBoard()[1][0] === board.getBoard()[2][0]
-      ) {
-        hasWon = true;
-      }
-
-      // Second vertical
-      if (
-        board.getBoard()[0][1] === board.getBoard()[1][1] &&
-        board.getBoard()[1][1] === board.getBoard()[2][1]
-      ) {
-        hasWon = true;
-      }
-
-      // Third vertical
-      if (
-        board.getBoard()[0][2] === board.getBoard()[1][2] &&
-        board.getBoard()[1][2] === board.getBoard()[2][2]
-      ) {
-        hasWon = true;
-      }
-
-      if (hasWon) {
-        console.log(`${getActivePlayer().name} has won!!!`);
-      }
-    };
-
-    declareWinner();
+    setWinner();
     switchPlayerTurn();
     printNewRound();
+  };
+
+  const isWinnerDeclared = () => {
+    const boardArray = board.getBoard();
+    const activePlayer = getActivePlayer().name;
+    // // Win conditions
+    // Right diagonal
+    if (
+      boardArray[0][2] === boardArray[1][1] &&
+      boardArray[1][1] === boardArray[2][0] &&
+      boardArray[0][2] !== ""
+    ) {
+      return true;
+    }
+
+    // Left diagonal
+    if (
+      boardArray[0][0] === boardArray[1][1] &&
+      boardArray[1][1] === boardArray[2][2] &&
+      boardArray[0][0] !== ""
+    ) {
+      return true;
+    }
+
+    // First horizontal
+    if (
+      boardArray[0][0] === boardArray[0][1] &&
+      boardArray[0][1] === boardArray[0][2] &&
+      boardArray[0][0] !== ""
+    ) {
+      return true;
+    }
+
+    // Second horizontal
+    if (
+      boardArray[1][0] === boardArray[1][1] &&
+      boardArray[1][1] === boardArray[1][2] &&
+      boardArray[1][0] !== ""
+    ) {
+      return true;
+    }
+
+    // Third horizontal
+    if (
+      boardArray[2][0] === boardArray[2][1] &&
+      boardArray[2][1] === boardArray[2][2] &&
+      boardArray[2][0] !== ""
+    ) {
+      return true;
+    }
+
+    // First vertical
+    if (
+      boardArray[0][0] === boardArray[1][0] &&
+      boardArray[1][0] === boardArray[2][0] &&
+      boardArray[0][0] !== ""
+    ) {
+      return true;
+    }
+
+    // Second vertical
+    if (
+      boardArray[0][1] === boardArray[1][1] &&
+      boardArray[1][1] === boardArray[2][1] &&
+      boardArray[0][1] !== ""
+    ) {
+      return true;
+    }
+
+    // Third vertical
+    if (
+      boardArray[0][2] === boardArray[1][2] &&
+      boardArray[1][2] === boardArray[2][2] &&
+      boardArray[0][2] !== ""
+    ) {
+      return true;
+    }
+
+    return false;
   };
 
   printNewRound();
@@ -134,3 +152,9 @@ const gameController = (
 };
 
 const game = gameController();
+
+game.playRound(2, 2);
+game.playRound(1, 2);
+game.playRound(2, 1);
+game.playRound(1, 1);
+game.playRound(2, 0);
