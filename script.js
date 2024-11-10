@@ -12,6 +12,7 @@ const gameBoard = () => {
 
   const getBoard = () => board;
 
+  // Function to draw X or O to board;
   const drawXorO = (row, column, player) => {
     board[row][column] = player;
   };
@@ -37,6 +38,7 @@ const gameController = (
 
   const getActivePlayer = () => activePlayer;
 
+  //Only set winner if winner is declared
   const setWinner = () => {
     winner = isWinnerDeclared() ? getActivePlayer().name : null;
   };
@@ -58,6 +60,8 @@ const gameController = (
 
   const playRound = (row, column) => {
     console.log(`${getActivePlayer().name} is playing...`);
+
+    // Function to draw X or O to board
     board.drawXorO(row, column, getActivePlayer().mark);
 
     setWinner();
@@ -144,6 +148,7 @@ const gameController = (
     return false;
   };
 
+  // Starts new round on initialization
   printNewRound();
 
   return { playRound, getActivePlayer, getWinner };
