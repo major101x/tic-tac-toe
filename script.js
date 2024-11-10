@@ -51,6 +51,79 @@ const gameController = (
     console.log(`${getActivePlayer().name} is playing...`);
     board.drawXorO(row, column, getActivePlayer().mark);
 
+    const declareWinner = () => {
+      let hasWon = false;
+      // // Win conditions
+      // Right diagonal
+      if (
+        board.getBoard()[0][2] === board.getBoard()[1][1] &&
+        board.getBoard()[1][1] === board.getBoard()[2][0]
+      ) {
+        hasWon = true;
+      }
+
+      // Left diagonal
+      if (
+        board.getBoard()[0][0] === board.getBoard()[1][1] &&
+        board.getBoard()[1][1] === board.getBoard()[2][0]
+      ) {
+        hasWon = true;
+      }
+
+      // First horizontal
+      if (
+        board.getBoard()[0][0] === board.getBoard()[0][1] &&
+        board.getBoard()[0][1] === board.getBoard()[0][2]
+      ) {
+        hasWon = true;
+      }
+
+      // Second horizontal
+      if (
+        board.getBoard()[1][0] === board.getBoard()[1][1] &&
+        board.getBoard()[1][1] === board.getBoard()[1][2]
+      ) {
+        hasWon = true;
+      }
+
+      // Third horizontal
+      if (
+        board.getBoard()[2][0] === board.getBoard()[2][1] &&
+        board.getBoard()[2][1] === board.getBoard()[2][2]
+      ) {
+        hasWon = true;
+      }
+
+      // First vertical
+      if (
+        board.getBoard()[0][0] === board.getBoard()[1][0] &&
+        board.getBoard()[1][0] === board.getBoard()[2][0]
+      ) {
+        hasWon = true;
+      }
+
+      // Second vertical
+      if (
+        board.getBoard()[0][1] === board.getBoard()[1][1] &&
+        board.getBoard()[1][1] === board.getBoard()[2][1]
+      ) {
+        hasWon = true;
+      }
+
+      // Third vertical
+      if (
+        board.getBoard()[0][2] === board.getBoard()[1][2] &&
+        board.getBoard()[1][2] === board.getBoard()[2][2]
+      ) {
+        hasWon = true;
+      }
+
+      if (hasWon) {
+        console.log(`${getActivePlayer().name} has won!!!`);
+      }
+    };
+
+    declareWinner();
     switchPlayerTurn();
     printNewRound();
   };
