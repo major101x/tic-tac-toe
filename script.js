@@ -21,8 +21,6 @@ const gameBoard = () => {
   return { getBoard, drawXorO, printBoard };
 };
 
-// gameBoard.printBoard();
-
 const gameController = (
   playerOneName = "Player One",
   playerTwoName = "Player Two"
@@ -148,7 +146,7 @@ const gameController = (
 
   printNewRound();
 
-  return { playRound, getActivePlayer };
+  return { playRound, getActivePlayer, getWinner };
 };
 
 const game = gameController();
