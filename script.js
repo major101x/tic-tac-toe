@@ -1,4 +1,4 @@
-const gameBoard = (function () {
+const gameBoard = () => {
   const rows = 3;
   const columns = 3;
   const board = [];
@@ -19,15 +19,15 @@ const gameBoard = (function () {
   const printBoard = () => console.table(board);
 
   return { getBoard, drawXorO, printBoard };
-})();
+};
 
-gameBoard.printBoard();
+// gameBoard.printBoard();
 
 const gameController = (
   playerOneName = "Player One",
   playerTwoName = "Player Two"
 ) => {
-  const board = gameBoard;
+  const board = gameBoard();
 
   const players = [
     { name: playerOneName, mark: "X" },
@@ -152,9 +152,3 @@ const gameController = (
 };
 
 const game = gameController();
-
-game.playRound(2, 2);
-game.playRound(1, 2);
-game.playRound(2, 1);
-game.playRound(1, 1);
-game.playRound(2, 0);
