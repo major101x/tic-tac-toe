@@ -231,9 +231,13 @@ const displayController = () => {
   function clickHandlerBoard(e) {
     const selectedRow = e.target.dataset.row;
     const selectedColumn = e.target.dataset.column;
+    const selectedCellValue = e.target.textContent;
 
     // Make sure I've clicked a column and not the gaps in between
     if (!selectedRow && !selectedColumn) return;
+
+    // Checks if the square already contains a mark
+    if (selectedCellValue !== "") return;
 
     game.playRound(selectedRow, selectedColumn);
     updateScreen();
