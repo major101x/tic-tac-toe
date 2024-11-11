@@ -189,6 +189,20 @@ const displayController = () => {
     );
   };
 
+  // Add event listener for the board
+  function clickHandlerBoard(e) {
+    const selectedRow = e.target.dataset.row;
+    const selectedColumn = e.target.dataset.column;
+
+    // Make sure I've clicked a column and not the gaps in between
+    if (!selectedRow && !selectedColumn) return;
+    
+    game.playRound(selectedRow, selectedColumn);
+    updateScreen();
+  }
+
+  boardDiv.addEventListener("click", clickHandlerBoard);
+
   updateScreen();
 };
 
