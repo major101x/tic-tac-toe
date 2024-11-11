@@ -36,6 +36,9 @@ const gameController = (
   let activePlayer = players[0];
   let winner = null;
 
+  // Gets board from board factory
+  const getBoard = () => board.getBoard();
+
   const getActivePlayer = () => activePlayer;
 
   //Only set winner if winner is declared
@@ -151,7 +154,42 @@ const gameController = (
   // Starts new round on initialization
   printNewRound();
 
-  return { playRound, getActivePlayer, getWinner, getBoard: board.getBoard };
+  return { playRound, getActivePlayer, getWinner, getBoard };
 };
 
-const game = gameController();
+const displayController = () => {
+  const game = gameController();
+  const boardDiv = document.querySelector(".board");
+  const playerTurnDiv = document.querySelector(".turn");
+
+  const updateScreen = () => {
+    // Clear the board
+    boardDiv.textContent = "";
+
+    // Get the newest version of the board and active player
+    const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
+
+    // Display player's turn
+    playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+
+    // Renders board to UI
+    board.forEach((row, rowIndex) =>
+      row.forEach((column, columnIndex) => {
+        const cellButton = document.createElement("button");
+        cellButton.classList.add("cell");
+
+        // Adds row and column dataset for updating board
+        cellButton.dataset.column = columnIndex;
+        cellButton.dataset.row = rowIndex;
+
+        cellButton.textContent = column;
+        boardDiv.appendChild(cellButton);
+      })
+    );
+  };
+
+  updateScreen();
+};
+
+displayController();
