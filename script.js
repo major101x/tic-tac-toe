@@ -43,7 +43,12 @@ const gameController = (
 
   //Only set winner if winner is declared
   const setWinner = () => {
-    winner = isWinnerDeclared() ? getActivePlayer().name : null;
+    winner =
+      isWinnerDeclared() && !isDraw()
+        ? getActivePlayer().name
+        : !isWinnerDeclared() && isDraw()
+        ? "Draw"
+        : null;
   };
 
   const getWinner = () => winner;
@@ -54,8 +59,10 @@ const gameController = (
 
   const printNewRound = () => {
     board.printBoard();
-    if (winner) {
+    if (winner !== null && winner !== "Draw") {
       console.log(`${getWinner()} is the winner!`);
+    } else if (winner !== null && winner === "Draw") {
+      console.log(`It's a Draw!!!`);
     } else {
       console.log(`${getActivePlayer().name}'s turn`);
     }
@@ -151,6 +158,19 @@ const gameController = (
     return false;
   };
 
+  // Check if there is a draw
+  const isDraw = () => {
+    // Checks if a winner is declared and if all board cells are filled
+    if (
+      !isWinnerDeclared() &&
+      !board.getBoard().some((row) => row.some((column) => column === ""))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   // Starts new round on initialization
   printNewRound();
 
@@ -174,8 +194,10 @@ const displayController = () => {
     const winner = game.getWinner();
 
     // Display winner or display active player's turn
-    if (winner) {
-     playerTurnDiv.textContent = `${winner} is the winner!!!`;
+    if (winner !== null && winner !== "Draw") {
+      console.log(`${winner} is the winner!`);
+    } else if (winner !== null && winner === "Draw") {
+      console.log(`It's a Draw!!!`);
     } else {
       playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
     }
@@ -191,6 +213,14 @@ const displayController = () => {
         cellButton.dataset.row = rowIndex;
 
         cellButton.textContent = column;
+
+        // Disables button if game is won or draw
+        if (winner !== null && winner !== "Draw") {
+          cellButton.disabled = true;
+        } else if (winner !== null && winner === "Draw") {
+          cellButton.disabled = true;
+        }
+
         boardDiv.appendChild(cellButton);
       })
     );
@@ -203,7 +233,7 @@ const displayController = () => {
 
     // Make sure I've clicked a column and not the gaps in between
     if (!selectedRow && !selectedColumn) return;
-    
+
     game.playRound(selectedRow, selectedColumn);
     updateScreen();
   }
