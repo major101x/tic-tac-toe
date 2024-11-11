@@ -151,7 +151,7 @@ const gameController = (
   // Starts new round on initialization
   printNewRound();
 
-  return { playRound, getActivePlayer, getWinner };
+  return { playRound, getActivePlayer, getWinner, getBoard: board.getBoard };
 };
 
 const game = gameController();
