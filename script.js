@@ -170,8 +170,15 @@ const displayController = () => {
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
 
-    // Display player's turn
-    playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    // Get winner
+    const winner = game.getWinner();
+
+    // Display winner or display active player's turn
+    if (winner) {
+     playerTurnDiv.textContent = `${winner} is the winner!!!`;
+    } else {
+      playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    }
 
     // Renders board to UI
     board.forEach((row, rowIndex) =>
