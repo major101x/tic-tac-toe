@@ -181,6 +181,7 @@ const displayController = () => {
   const game = gameController();
   const boardDiv = document.querySelector(".board");
   const playerTurnDiv = document.querySelector(".turn");
+  const newGameButton = document.querySelector(".new-game-btn");
 
   const updateScreen = () => {
     // Clear the board
@@ -239,6 +240,7 @@ const displayController = () => {
   }
 
   boardDiv.addEventListener("click", clickHandlerBoard);
+  newGameButton.addEventListener("click", displayController);
 
   updateScreen();
 };
