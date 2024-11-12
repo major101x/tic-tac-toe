@@ -9,24 +9,24 @@
   <body>
     <div class="container">
       <h1>Tic Tac Toe</h1>
-        <div class="dialog">
-            <h1>Enter your player names</h1>
-            <div class="name-inputs">
-                <div class="name-input">
-                    <label for="player-1-name">Player 1</label>
-                    <input type="text" id="player-1-name">
-                </div>
-                <div class="name-input">
-                    <label for="player-2-name">Player 2</label>
-                    <input type="text" id="player-2-name">
-                </div>
-            </div>
-            <button class="start-game-btn">Start Game</button>
+      <div class="dialog">
+        <h1>Enter your player names</h1>
+        <div class="name-inputs">
+          <div class="name-input">
+            <label for="player-1-name">Player 1</label>
+            <input type="text" id="player-1-name" maxlength="100" />
+          </div>
+          <div class="name-input">
+            <label for="player-2-name">Player 2</label>
+            <input type="text" id="player-2-name" maxlength="100" />
+          </div>
         </div>
+        <button class="start-game-btn">Start Game</button>
+      </div>
       <div class="game-container">
-          <div class="turn"></div>
-          <div class="board"></div>
-          <button class="new-game-btn">New Game</button>
+        <div class="turn"></div>
+        <div class="board"></div>
+        <button class="new-game-btn">New Game</button>
       </div>
     </div>
 
