@@ -177,8 +177,10 @@ const gameController = (
   return { playRound, getActivePlayer, getWinner, getBoard };
 };
 
-const gameDisplayController = () => {
-  const game = gameController();
+const gameDisplayController = (playerOneNameValue, playerTwoNameValue) => {
+  const playerOneName = playerOneNameValue;
+  const playerTwoName = playerTwoNameValue;
+  const game = gameController(playerOneName, playerTwoName);
   const boardDiv = document.querySelector(".board");
   const playerTurnDiv = document.querySelector(".turn");
   const newGameButton = document.querySelector(".new-game-btn");
@@ -201,9 +203,9 @@ const gameDisplayController = () => {
 
     // Display winner or display active player's turn
     if (winner !== null && winner !== "Draw") {
-      console.log(`${winner} is the winner!`);
+      playerTurnDiv.textContent = `${winner} is the winner!`;
     } else if (winner !== null && winner === "Draw") {
-      console.log(`It's a Draw!!!`);
+      playerTurnDiv.textContent = `It's a Draw!!!`;
     } else {
       playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
     }
@@ -248,8 +250,12 @@ const gameDisplayController = () => {
     updateScreen();
   }
 
+  const newGame = () => {
+    gameDisplayController(playerOneName, playerTwoName);
+  };
+
   boardDiv.addEventListener("click", clickHandlerBoard);
-  newGameButton.addEventListener("click", gameDisplayController);
+  newGameButton.addEventListener("click", newGame);
 
   updateScreen();
 };
@@ -258,11 +264,17 @@ const mainDisplayController = () => {
   const dialog = document.querySelector(".dialog");
   const gameContainerDiv = document.querySelector(".game-container");
   const startGameBtn = document.querySelector(".start-game-btn");
+  const playerOneName = document.querySelector("#player-1-name");
+  const playerTwoName = document.querySelector("#player-2-name");
 
   dialog.style.display = "block";
   gameContainerDiv.style.display = "none";
 
-  startGameBtn.addEventListener("click", gameDisplayController);
-}
+  const startGame = () => {
+    gameDisplayController(playerOneName.value, playerTwoName.value);
+  };
+
+  startGameBtn.addEventListener("click", startGame);
+};
 
 mainDisplayController();
