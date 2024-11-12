@@ -177,11 +177,16 @@ const gameController = (
   return { playRound, getActivePlayer, getWinner, getBoard };
 };
 
-const displayController = () => {
+const gameDisplayController = () => {
   const game = gameController();
   const boardDiv = document.querySelector(".board");
   const playerTurnDiv = document.querySelector(".turn");
   const newGameButton = document.querySelector(".new-game-btn");
+  const gameContainerDiv = document.querySelector(".game-container");
+  const dialog = document.querySelector(".dialog");
+
+  dialog.style.display = "none";
+  gameContainerDiv.style.display = "block";
 
   const updateScreen = () => {
     // Clear the board
@@ -244,9 +249,20 @@ const displayController = () => {
   }
 
   boardDiv.addEventListener("click", clickHandlerBoard);
-  newGameButton.addEventListener("click", displayController);
+  newGameButton.addEventListener("click", gameDisplayController);
 
   updateScreen();
 };
 
-displayController();
+const mainDisplayController = () => {
+  const dialog = document.querySelector(".dialog");
+  const gameContainerDiv = document.querySelector(".game-container");
+  const startGameBtn = document.querySelector(".start-game-btn");
+
+  dialog.style.display = "block";
+  gameContainerDiv.style.display = "none";
+
+  startGameBtn.addEventListener("click", gameDisplayController);
+}
+
+mainDisplayController();
