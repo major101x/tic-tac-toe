@@ -267,11 +267,14 @@ const mainDisplayController = () => {
   const playerOneName = document.querySelector("#player-1-name");
   const playerTwoName = document.querySelector("#player-2-name");
 
-  dialog.style.display = "block";
+  dialog.style.display = "flex";
   gameContainerDiv.style.display = "none";
 
   const startGame = () => {
-    gameDisplayController(playerOneName.value, playerTwoName.value);
+    const playerOne = playerOneName.value ? playerOneName.value : "Player One";
+    const playerTwo = playerTwoName.value ? playerTwoName.value : "Player Two";
+
+    gameDisplayController(playerOne, playerTwo);
   };
 
   startGameBtn.addEventListener("click", startGame);
