@@ -4,30 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Labrada:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
-      <h1>Tic Tac Toe</h1>
+      <header>
+        <h1>Tic-Tac-Toe</h1>
+      </header>
       <div class="dialog">
         <h1>Enter your player names</h1>
         <div class="name-inputs">
           <div class="name-input">
             <label for="player-1-name">Player 1</label>
-            <input type="text" id="player-1-name" maxlength="100" />
+            <input
+              type="text"
+              id="player-1-name"
+              maxlength="100"
+              autocomplete="off"
+            />
           </div>
           <div class="name-input">
             <label for="player-2-name">Player 2</label>
-            <input type="text" id="player-2-name" maxlength="100" />
+            <input
+              type="text"
+              id="player-2-name"
+              maxlength="100"
+              autocomplete="off"
+            />
           </div>
         </div>
-        <button class="start-game-btn">Start Game</button>
+        <div class="start-btn-container">
+          <button class="start-game-btn">Start Game</button>
+        </div>
       </div>
       <div class="game-container">
         <div class="turn"></div>
         <div class="board"></div>
         <button class="new-game-btn">New Game</button>
       </div>
+      <footer>
+        <p>Copyright &copy; 2024 Olayiwola Aroyeun</p>
+      </footer>
     </div>
 
     <script src="script.js"></script>

@@ -188,7 +188,7 @@ const gameDisplayController = (playerOneNameValue, playerTwoNameValue) => {
   const dialog = document.querySelector(".dialog");
 
   dialog.style.display = "none";
-  gameContainerDiv.style.display = "block";
+  gameContainerDiv.style.display = "flex";
 
   const updateScreen = () => {
     // Clear the board
@@ -219,6 +219,8 @@ const gameDisplayController = (playerOneNameValue, playerTwoNameValue) => {
         // Adds row and column dataset for updating board
         cellButton.dataset.column = columnIndex;
         cellButton.dataset.row = rowIndex;
+
+        cellButton.dataset.mark = column; // Sets data-mark for specific styling
 
         cellButton.textContent = column;
 
@@ -267,11 +269,14 @@ const mainDisplayController = () => {
   const playerOneName = document.querySelector("#player-1-name");
   const playerTwoName = document.querySelector("#player-2-name");
 
-  dialog.style.display = "block";
+  dialog.style.display = "flex";
   gameContainerDiv.style.display = "none";
 
   const startGame = () => {
-    gameDisplayController(playerOneName.value, playerTwoName.value);
+    const playerOne = playerOneName.value ? playerOneName.value : "Player One";
+    const playerTwo = playerTwoName.value ? playerTwoName.value : "Player Two";
+
+    gameDisplayController(playerOne, playerTwo);
   };
 
   startGameBtn.addEventListener("click", startGame);
