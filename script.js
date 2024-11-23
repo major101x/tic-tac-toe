@@ -19,7 +19,9 @@ const gameBoard = () => {
 
   const printBoard = () => console.table(board);
 
-  return { getBoard, drawXorO, printBoard };
+  const getCell = (row, column) => board[row][column];
+
+  return { getBoard, drawXorO, printBoard, getCell };
 };
 
 const gameController = (
@@ -79,96 +81,73 @@ const gameController = (
     printNewRound();
   };
 
-  const isWinnerDeclared = () => {
-    const boardArray = board.getBoard();
-    const activePlayer = getActivePlayer().name;
-    // // Win conditions
-    // Right diagonal
-    if (
-      boardArray[0][2] === boardArray[1][1] &&
-      boardArray[1][1] === boardArray[2][0] &&
-      boardArray[0][2] !== ""
-    ) {
-      return true;
-    }
+  const allLines = [
+    [
+      [0, 2],
+      [1, 1],
+      [2, 0],
+    ], // Right diagonal
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+    ], // Left diagonal
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ], // First horizontal
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ], // Second horizontal
+    [
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ], // Third horizontal
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+    ], // First vertical
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+    ], // Second vertical
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+    ], // Third vertical
+  ];
 
-    // Left diagonal
-    if (
-      boardArray[0][0] === boardArray[1][1] &&
-      boardArray[1][1] === boardArray[2][2] &&
-      boardArray[0][0] !== ""
-    ) {
-      return true;
-    }
-
-    // First horizontal
-    if (
-      boardArray[0][0] === boardArray[0][1] &&
-      boardArray[0][1] === boardArray[0][2] &&
-      boardArray[0][0] !== ""
-    ) {
-      return true;
-    }
-
-    // Second horizontal
-    if (
-      boardArray[1][0] === boardArray[1][1] &&
-      boardArray[1][1] === boardArray[1][2] &&
-      boardArray[1][0] !== ""
-    ) {
-      return true;
-    }
-
-    // Third horizontal
-    if (
-      boardArray[2][0] === boardArray[2][1] &&
-      boardArray[2][1] === boardArray[2][2] &&
-      boardArray[2][0] !== ""
-    ) {
-      return true;
-    }
-
-    // First vertical
-    if (
-      boardArray[0][0] === boardArray[1][0] &&
-      boardArray[1][0] === boardArray[2][0] &&
-      boardArray[0][0] !== ""
-    ) {
-      return true;
-    }
-
-    // Second vertical
-    if (
-      boardArray[0][1] === boardArray[1][1] &&
-      boardArray[1][1] === boardArray[2][1] &&
-      boardArray[0][1] !== ""
-    ) {
-      return true;
-    }
-
-    // Third vertical
-    if (
-      boardArray[0][2] === boardArray[1][2] &&
-      boardArray[1][2] === boardArray[2][2] &&
-      boardArray[0][2] !== ""
-    ) {
-      return true;
-    }
-
-    return false;
+  // Checks if every cell inside each line of the allLines array is equal to the value of the first cell
+  const isWinningLine = (line) => {
+    const firstCell = board.getCell(...line[0]);
+    return (
+      firstCell !== "" &&
+      line.every((cellCoords) => board.getCell(...cellCoords) === firstCell)
+    );
   };
+
+  // Calls the isWinningLine function on every line of the allLines array
+  function isWinnerDeclared() {
+    for (const line of allLines) {
+      if (isWinningLine(line)) return true;
+    }
+    return false;
+  }
 
   // Check if there is a draw
   const isDraw = () => {
     // Checks if a winner is declared and if all board cells are filled
-    if (
+    return (
       !isWinnerDeclared() &&
       !board.getBoard().some((row) => row.some((column) => column === ""))
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   };
 
   // Starts new round on initialization
